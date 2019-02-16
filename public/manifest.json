@@ -1,0 +1,41 @@
+{
+  "name": "Chrome Zones",
+  "short_name": "Chrome Zones",
+  "version": "0.1.0",
+  "description": "Organize and save your tab groups!",
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Chrome Zones",
+    "default_icon": "icon.png"
+  },
+  "options_page": "index.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "main.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
+  "omnibox": {
+    "keyword": "zone"
+  },
+  "icons": {
+    "16": "icon.png"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage"
+  ],
+  "manifest_version": 2
+}

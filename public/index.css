@@ -1,0 +1,6 @@
+html, body, #root {
+    height: 500px;
+    width: 700px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
