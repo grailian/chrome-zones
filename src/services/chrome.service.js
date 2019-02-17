@@ -1,4 +1,4 @@
-function getTabsForWindow(windowId) {
+export function getTabsForWindow(windowId) {
   return new Promise((resolve, reject) => {
     chrome.tabs.query({ windowId }, (tabs) => {
       resolve(tabs);

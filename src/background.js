@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime';
-import { getAllWindowsAndTabs } from './services/chrome.service';
+import { getAllWindowsAndTabs, getTabsForWindow } from './services/chrome.service';
 import { getZones, launchZone, saveZone } from './services/zoneService';
 
 let zones = [];
@@ -89,3 +89,23 @@ chrome.windows.onRemoved.addListener(async (windowId) => {
     });
   }
 });
+
+chrome.windows.onCreated.addListener(async (window) => {
+  zones = await getZones();
+  const tabs = await getTabsForWindow(window.id);
+  let openedZone = zones.find((zone) => zone.windowId === window.id);
+  if (!openedZone) {
+    openedZone = zones.find((zone) => {
+      return tabs.every((tab) => {
+        return zone.tabs.some((zTabs) => zTabs.url === tab.url);
+      });
+    });
+  }
+  if (openedZone) {
+    await saveZone({
+      ...openedZone,
+      windowId: window.id,
+    });
+  }
+});
+
